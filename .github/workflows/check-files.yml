@@ -1,0 +1,58 @@
+name: Check Dictionary Files
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check if dictionary file exists
+      run: |
+        if [ -f "dicthtml-eng-fas.zip" ]; then
+          echo "✅ Dictionary file found: dicthtml-eng-fas.zip"
+          ls -lh dicthtml-eng-fas.zip
+        else
+          echo "❌ Dictionary file not found: dicthtml-eng-fas.zip"
+          exit 1
+        fi
+    
+    - name: Check file size
+      run: |
+        size=$(stat -c%s "dicthtml-eng-fas.zip")
+        size_mb=$((size / 1024 / 1024))
+        echo "📊 Dictionary file size: ${size_mb}MB"
+        
+        if [ $size_mb -lt 10 ]; then
+          echo "⚠️  Warning: File seems too small (${size_mb}MB)"
+        elif [ $size_mb -gt 100 ]; then
+          echo "⚠️  Warning: File seems too large (${size_mb}MB)"
+        else
+          echo "✅ File size looks reasonable (${size_mb}MB)"
+        fi
+    
+    - name: Verify ZIP file integrity
+      run: |
+        if unzip -t dicthtml-eng-fas.zip > /dev/null 2>&1; then
+          echo "✅ ZIP file integrity check passed"
+        else
+          echo "❌ ZIP file appears to be corrupted"
+          exit 1
+        fi
+    
+    - name: Check documentation files
+      run: |
+        files=("README.md" "LICENSE" "CHANGELOG.md" "INSTALLATION.md" "CONTRIBUTING.md")
+        for file in "${files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✅ Found: $file"
+          else
+            echo "❌ Missing: $file"
+          fi
+        done
