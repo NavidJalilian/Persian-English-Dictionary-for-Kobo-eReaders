@@ -84,12 +84,6 @@ A comprehensive **English to Persian (Farsi)** dictionary optimized for Kobo eRe
 - `dicthtml-pt-en.zip` (پرتغالی → انگلیسی / Portuguese → English)
 - `dicthtml-ja-en.zip` (ژاپنی → انگلیسی / Japanese → English)
 
-### مثال نصب / Installation Example:
-**فارسی:** اگر از فرهنگ پرتغالی استفاده نمی‌کنید:
-1. فایل `dicthtml-eng-fas.zip` را به `.kobo/dict/` کپی کنید
-2. نام آن را به `dicthtml-pt-en.zip` تغییر دهید
-3. فرهنگ پرتغالی را در تنظیمات کوبو فعال کنید
-4. دستگاه را مجدداً راه‌اندازی کنید
 
 ## 💡 نکات استفاده / Usage Tips
 
